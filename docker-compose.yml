@@ -1,0 +1,56 @@
+﻿version: "3.9"
+networks:
+  practice:
+    driver: bridge
+services:
+  app:
+    container_name: links
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - practice
+    depends_on:
+      - postgres_db
+      - rabbitmq
+  consumer:
+    container_name: consumer
+    build:
+      context: .
+      dockerfile: DockerFileConsumer
+    ports:
+      - "5110:5110"
+    networks:
+      - practice
+    depends_on:
+      - postgres_db
+      - rabbitmq
+  postgres_db:
+    container_name: postgres
+    image: postgres:15.2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: Links
+    ports:
+      - "5432:5432"
+    networks:
+      - practice
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  rabbitmq:
+    container_name: rabbitmq
+    tty: true
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    image: rabbitmq:3.12-management 
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - practice
+volumes:
+  postgres-data:

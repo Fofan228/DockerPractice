@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "WG7V4EIy1IrUhaG5PJuvlOMSY+hlbema2gp3eD1UurM=",
+  "Source": "DockerRaspr",
+  "BasePath": "_content/DockerRaspr",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

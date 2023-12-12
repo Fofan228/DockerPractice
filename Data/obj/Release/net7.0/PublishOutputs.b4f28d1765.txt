@@ -1,0 +1,17 @@
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Data.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Data.deps.json
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Data.pdb
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Microsoft.EntityFrameworkCore.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Microsoft.EntityFrameworkCore.Relational.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Microsoft.Extensions.Caching.Abstractions.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Microsoft.Extensions.Caching.Memory.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Microsoft.Extensions.DependencyInjection.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Microsoft.Extensions.Logging.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Microsoft.Extensions.Logging.Abstractions.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Microsoft.Extensions.Options.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Microsoft.Extensions.Primitives.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Npgsql.dll
+D:\SharpProj\DockerRaspr\Data\bin\Release\net7.0\publish\Npgsql.EntityFrameworkCore.PostgreSQL.dll

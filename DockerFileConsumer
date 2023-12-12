@@ -1,0 +1,20 @@
+﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /app
+EXPOSE 5110
+ENV ASPNETCORE_URLS=http://+:5110
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
+COPY . .
+RUN dotnet restore "Consumer/Consumer.csproj"
+WORKDIR "/src/Consumer"
+RUN dotnet build "Consumer.csproj" -c Release -o /app
+
+FROM build AS publish
+WORKDIR "/src/Consumer"
+RUN dotnet publish "Consumer.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "Consumer.dll", "--server.urls", "http://127.0.0.1:5110"]
