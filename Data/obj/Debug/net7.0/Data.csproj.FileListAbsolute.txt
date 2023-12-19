@@ -11,6 +11,7 @@ D:\SharpProj\DockerRaspr\Data\obj\Debug\net7.0\refint\Data.dll
 D:\SharpProj\DockerRaspr\Data\obj\Debug\net7.0\Data.pdb
 D:\SharpProj\DockerRaspr\Data\obj\Debug\net7.0\ref\Data.dll
 D:\SharpProj\DockerRaspr\src\Data\bin\Debug\net7.0\Data.deps.json
+D:\SharpProj\DockerRaspr\src\Data\bin\Debug\net7.0\Data.runtimeconfig.json
 D:\SharpProj\DockerRaspr\src\Data\bin\Debug\net7.0\Data.dll
 D:\SharpProj\DockerRaspr\src\Data\bin\Debug\net7.0\Data.pdb
 D:\SharpProj\DockerRaspr\src\Data\obj\Debug\net7.0\Data.csproj.AssemblyReference.cache
@@ -21,6 +22,5 @@ D:\SharpProj\DockerRaspr\src\Data\obj\Debug\net7.0\Data.csproj.CoreCompileInputs
 D:\SharpProj\DockerRaspr\src\Data\obj\Debug\net7.0\Data.dll
 D:\SharpProj\DockerRaspr\src\Data\obj\Debug\net7.0\refint\Data.dll
 D:\SharpProj\DockerRaspr\src\Data\obj\Debug\net7.0\Data.pdb
-D:\SharpProj\DockerRaspr\src\Data\obj\Debug\net7.0\ref\Data.dll
-D:\SharpProj\DockerRaspr\src\Data\bin\Debug\net7.0\Data.runtimeconfig.json
 D:\SharpProj\DockerRaspr\src\Data\obj\Debug\net7.0\Data.genruntimeconfig.cache
+D:\SharpProj\DockerRaspr\src\Data\obj\Debug\net7.0\ref\Data.dll

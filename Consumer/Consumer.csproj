@@ -14,7 +14,14 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Data\Data.csproj" />
+      <ProjectReference Include="..\Redis\Redis.csproj" />
       <ProjectReference Include="..\Service\Service.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Service">
+        <HintPath>..\DockerRaspr\bin\Debug\net7.0\Service.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

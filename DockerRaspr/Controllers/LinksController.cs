@@ -1,5 +1,7 @@
 using Data;
+using Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Rabbit.RabbitMQ;
 
 namespace DockerRaspr.Controllers;
@@ -8,19 +10,19 @@ namespace DockerRaspr.Controllers;
 [Route("[controller]")]
 public class LinksController : ControllerBase
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IRepositoryLink _repositoryLink;
     private readonly IRabbitMqService _rabbitMqService;
     
-    public LinksController(ApplicationDbContext dbContext, IRabbitMqService rabbitMqService)
+    public LinksController(IRabbitMqService rabbitMqService, IRepositoryLink repositoryLink)
     {
-        _dbContext = dbContext;
         _rabbitMqService = rabbitMqService;
+        _repositoryLink = repositoryLink;
     }
 
     [HttpGet("get/{id:long}")]
     public async Task<ActionResult<Link>> Get(long id)
     {
-        var entityFromDb = await _dbContext.Links.FindAsync(id);
+        var entityFromDb = await _repositoryLink.GetLinkByIdAsync(id);
         
         if (entityFromDb is null)
             return BadRequest("Database not have entity with this id");
@@ -38,10 +40,14 @@ public class LinksController : ControllerBase
             Status = link.Status,
         };
 
-        await _dbContext.Links.AddAsync(entity);
-        await _dbContext.SaveChangesAsync();
-        
-        _rabbitMqService.SendMessage(link);
+        await _repositoryLink.InsertAsync(entity);
+
+        await _repositoryLink.SaveAsync();
+
+        var linkToQueue = await _repositoryLink.GetFirstInInvertLinksAsync();
+
+        if (linkToQueue != null) 
+            _rabbitMqService.SendMessage(linkToQueue);
 
         return link.Id;
     }
@@ -49,7 +55,7 @@ public class LinksController : ControllerBase
     [HttpPut("update/")]
     public async Task<ActionResult> Update([FromBody] Link link)
     {
-        var entityFromDb = await _dbContext.Links.FindAsync(link.Id);
+        var entityFromDb = await _repositoryLink.GetLinkByIdAsync(link.Id);
 
         if (entityFromDb is not null)
         {
@@ -57,7 +63,7 @@ public class LinksController : ControllerBase
             entityFromDb.Url = link.Url;
             entityFromDb.Status = link.Status;
 
-            await _dbContext.SaveChangesAsync();
+            await _repositoryLink.SaveAsync();
         }
         else
         {
@@ -70,14 +76,14 @@ public class LinksController : ControllerBase
     [HttpDelete("delete/{id:long}")]
     public async Task<ActionResult> Delete(long id)
     {
-        var entityFromDb = await _dbContext.Links.FindAsync(id);
+        var entityFromDb = await _repositoryLink.GetLinkByIdAsync(id);
 
         if (entityFromDb is not null)
-            _dbContext.Links.Remove(entityFromDb);
+            _repositoryLink.Delete(entityFromDb);
         else
             return BadRequest("Database not have entity with this id");
 
-        await _dbContext.SaveChangesAsync();
+        await _repositoryLink.SaveAsync();
 
         return Ok();
     }

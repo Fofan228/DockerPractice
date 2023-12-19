@@ -6,18 +6,15 @@ namespace Rabbit.RabbitMQ;
 
 public class RabbitMqService : IRabbitMqService
 {
+    //private bool IsRunningInContainer => bool.TryParse(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), out var inDocker) && inDocker;
+
     public IConnection CreateChannel()
     {
         var connection = new ConnectionFactory
         {
-            HostName = "localhost",
+            HostName = "rabbitmq",
             DispatchConsumersAsync = true,
             RequestedHeartbeat = new TimeSpan(60),
-            Ssl =
-            {
-                ServerName = "localhost",
-                Enabled = true
-            }
         };
         var channel = connection.CreateConnection();
         return channel;

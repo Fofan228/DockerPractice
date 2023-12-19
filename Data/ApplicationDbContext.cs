@@ -6,6 +6,7 @@ public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext() : base()
     {
+        var str = Database.GetConnectionString();
         Database.EnsureCreated();
     }
 

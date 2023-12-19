@@ -1,11 +1,14 @@
 D:\SharpProj\DockerRaspr\src\Service\bin\Debug\net7.0\Service.deps.json
 D:\SharpProj\DockerRaspr\src\Service\bin\Debug\net7.0\Service.dll
 D:\SharpProj\DockerRaspr\src\Service\bin\Debug\net7.0\Service.pdb
+D:\SharpProj\DockerRaspr\src\Service\bin\Debug\net7.0\Data.dll
+D:\SharpProj\DockerRaspr\src\Service\bin\Debug\net7.0\Data.pdb
 D:\SharpProj\DockerRaspr\src\Service\obj\Debug\net7.0\Service.csproj.AssemblyReference.cache
 D:\SharpProj\DockerRaspr\src\Service\obj\Debug\net7.0\Service.GeneratedMSBuildEditorConfig.editorconfig
 D:\SharpProj\DockerRaspr\src\Service\obj\Debug\net7.0\Service.AssemblyInfoInputs.cache
 D:\SharpProj\DockerRaspr\src\Service\obj\Debug\net7.0\Service.AssemblyInfo.cs
 D:\SharpProj\DockerRaspr\src\Service\obj\Debug\net7.0\Service.csproj.CoreCompileInputs.cache
+D:\SharpProj\DockerRaspr\src\Service\obj\Debug\net7.0\Service.csproj.CopyComplete
 D:\SharpProj\DockerRaspr\src\Service\obj\Debug\net7.0\Service.dll
 D:\SharpProj\DockerRaspr\src\Service\obj\Debug\net7.0\refint\Service.dll
 D:\SharpProj\DockerRaspr\src\Service\obj\Debug\net7.0\Service.pdb

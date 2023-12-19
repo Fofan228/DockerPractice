@@ -1,27 +1,33 @@
-﻿using System.Net;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using Data;
 using Rabbit.RabbitMQ;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Redis.Redis;
 
 namespace Consumer.RabbitMq.Consumer;
 
 public class ConsumerService : IConsumerService, IDisposable
 {
+    private const string QueueName = "Links";
+    private const string Exchange = "LinkExchange";
+
     private readonly IModel _model;
     private readonly IConnection _connection;
-    private const string QueueName = "Links";
-    
-    public ConsumerService(IRabbitMqService rabbitMqService)
+    private readonly IRedisService _redisService;
+    private readonly IRabbitMqService _rabbitMqService;
+
+    public ConsumerService(IRabbitMqService rabbitMqService, IRedisService redisService)
     {
-        _connection = rabbitMqService.CreateChannel();
+        _rabbitMqService = rabbitMqService;
+        _redisService = redisService;
+        _connection = _rabbitMqService.CreateChannel();
         _model = _connection.CreateModel();
         _model.QueueDeclare(QueueName, durable: true, exclusive: false, autoDelete: false);
-        _model.ExchangeDeclare("LinkExchange", ExchangeType.Fanout, durable: true, autoDelete: false);
-        _model.QueueBind(QueueName, "LinkExchange", string.Empty);
+        _model.ExchangeDeclare(Exchange, ExchangeType.Fanout, durable: true, autoDelete: false);
+        _model.QueueBind(QueueName, Exchange, string.Empty);
     }
 
     public async Task ReadMessages()
@@ -47,34 +53,29 @@ public class ConsumerService : IConsumerService, IDisposable
         if (_connection.IsOpen)
             _connection.Close();
     }
-    
+
     private async Task RunAsyncGet(Link link)
     {
-        var statusCode = await GetStatusCode(link.Url);
-        
         using var client = new HttpClient();
-        
+
         client.BaseAddress = new Uri("http://localhost:5000/");
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-        link.Status = statusCode.ToString();
-        
+        var linkInCache = await _redisService.GetStatusCode(link.Id);
+
+        if (linkInCache == null)
+            throw new Exception("Entity with id does not exist in Database");
+
+        link.Status = linkInCache;
+
         var serializeObj = JsonSerializer.Serialize(link);
         var stringContent = new StringContent(serializeObj, Encoding.UTF8, "application/json");
-        
+
         var response = await client.PutAsync("/Links/update/", stringContent);
         if (response.IsSuccessStatusCode is false)
         {
             throw new Exception();
         }
-    }
-
-    private async Task<HttpStatusCode> GetStatusCode(string link)
-    {
-        using var client = new HttpClient();
-        using var response = await client.GetAsync(link);
-        
-        return response.StatusCode;
     }
 }

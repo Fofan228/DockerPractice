@@ -177,7 +177,11 @@
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\SharpProj\\DockerRaspr\\src\\Data\\Data.csproj": {
+                "projectPath": "D:\\SharpProj\\DockerRaspr\\src\\Data\\Data.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -190,6 +194,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.Extensions.Caching.StackExchangeRedis": {
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
               "version": "[7.0.0, )"
@@ -197,10 +205,6 @@
             "Microsoft.Extensions.DependencyInjection.Abstractions": {
               "target": "Package",
               "version": "[7.0.0, )"
-            },
-            "RabbitMQ.Client": {
-              "target": "Package",
-              "version": "[6.7.0, )"
             },
             "RabbitMQ.Client.Core.DependencyInjection": {
               "target": "Package",
