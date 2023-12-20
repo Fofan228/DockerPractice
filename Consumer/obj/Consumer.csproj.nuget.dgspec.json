@@ -179,6 +179,9 @@
             "projectReferences": {
               "D:\\SharpProj\\DockerRaspr\\src\\Data\\Data.csproj": {
                 "projectPath": "D:\\SharpProj\\DockerRaspr\\src\\Data\\Data.csproj"
+              },
+              "D:\\SharpProj\\DockerRaspr\\src\\Service\\Service.csproj": {
+                "projectPath": "D:\\SharpProj\\DockerRaspr\\src\\Service\\Service.csproj"
               }
             }
           }

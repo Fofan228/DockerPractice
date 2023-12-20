@@ -563,7 +563,8 @@
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "Data": "1.0.0",
-          "Microsoft.Extensions.Caching.StackExchangeRedis": "8.0.0"
+          "Microsoft.Extensions.Caching.StackExchangeRedis": "8.0.0",
+          "Service": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Redis.dll": {}

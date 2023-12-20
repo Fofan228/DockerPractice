@@ -4,5 +4,5 @@ namespace Redis.Redis;
 
 public interface IRedisService
 {
-    Task<string?> GetStatusCode(Link link);
+    Task<string?> Get(string url, string statusCode);
 }

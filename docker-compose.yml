@@ -13,7 +13,7 @@ services:
         limits:
           memory: 1024M
     ports:
-      - "5000:80"
+      - "8000:80"
     networks:
       - practice
     depends_on:
@@ -30,7 +30,7 @@ services:
         limits:
           memory: 1024M
     ports:
-      - "5001:80"
+      - "8001:80"
     networks:
       - practice
     depends_on:
@@ -47,7 +47,7 @@ services:
         limits:
           memory: 1024M
     ports:
-      - "5110:80"
+      - "8110:80"
     networks:
       - practice
     depends_on:
@@ -64,7 +64,7 @@ services:
         limits:
           memory: 1024M
     ports:
-      - "5111:80"
+      - "8111:80"
     networks:
       - practice
     depends_on:

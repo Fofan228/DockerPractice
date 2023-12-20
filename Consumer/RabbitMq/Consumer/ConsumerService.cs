@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.Json;
 using Data;
+using Rabbit.HttpService;
 using Rabbit.RabbitMQ;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -17,13 +18,14 @@ public class ConsumerService : IConsumerService, IDisposable
     private readonly IModel _model;
     private readonly IConnection _connection;
     private readonly IRedisService _redisService;
-    private readonly IRabbitMqService _rabbitMqService;
+    private readonly IHttpService _httpService;
 
-    public ConsumerService(IRabbitMqService rabbitMqService, IRedisService redisService)
+    public ConsumerService(IRabbitMqService rabbitMqService, IRedisService redisService, IHttpService httpService)
     {
-        _rabbitMqService = rabbitMqService;
         _redisService = redisService;
-        _connection = _rabbitMqService.CreateChannel();
+        _httpService = httpService;
+        
+        _connection = rabbitMqService.CreateChannel();
         _model = _connection.CreateModel();
         _model.QueueDeclare(QueueName, durable: true, exclusive: false, autoDelete: false);
         _model.ExchangeDeclare(Exchange, ExchangeType.Fanout, durable: true, autoDelete: false);
@@ -62,10 +64,12 @@ public class ConsumerService : IConsumerService, IDisposable
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-        var statusCode = await _redisService.GetStatusCode(link);
+        var statusCode = await _httpService.GetStatusCodeAsync(link.Url);
+        
+        var statusFromCache = await _redisService.Get(link.Url, statusCode);
 
-        if (statusCode == null)
-            throw new Exception("StatusCode is null");
+        if (statusFromCache != null)
+            link.Status = statusFromCache;
 
         link.Status = statusCode;
 
