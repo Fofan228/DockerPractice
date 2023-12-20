@@ -62,12 +62,12 @@ public class ConsumerService : IConsumerService, IDisposable
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-        var linkInCache = await _redisService.GetStatusCode(link.Id);
+        var statusCode = await _redisService.GetStatusCode(link);
 
-        if (linkInCache == null)
-            throw new Exception("Entity with id does not exist in Database");
+        if (statusCode == null)
+            throw new Exception("StatusCode is null");
 
-        link.Status = linkInCache;
+        link.Status = statusCode;
 
         var serializeObj = JsonSerializer.Serialize(link);
         var stringContent = new StringContent(serializeObj, Encoding.UTF8, "application/json");

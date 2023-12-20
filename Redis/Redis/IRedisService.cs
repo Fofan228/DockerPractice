@@ -1,6 +1,8 @@
-﻿namespace Redis.Redis;
+﻿using Data;
+
+namespace Redis.Redis;
 
 public interface IRedisService
 {
-    Task<string?> GetStatusCode(long id);
+    Task<string?> GetStatusCode(Link link);
 }

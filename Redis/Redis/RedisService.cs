@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Data;
 using Data.Repository.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
 
@@ -6,27 +7,20 @@ namespace Redis.Redis;
 
 public class RedisService : IRedisService
 {
-    private readonly IRepositoryLink _repositoryLink;
     private readonly IDistributedCache _cache;
 
-    public RedisService(IDistributedCache cache, IRepositoryLink repositoryLink)
+    public RedisService(IDistributedCache cache)
     {
         _cache = cache;
-        _repositoryLink = repositoryLink;
     }
 
-    public async Task<string?> GetStatusCode(long id)
+    public async Task<string?> GetStatusCode(Link link)
     {
-        var linkString = await _cache.GetStringAsync(id.ToString());
+        var linkString = await _cache.GetStringAsync(link.Id.ToString());
 
         if (linkString != null)
             return linkString;
-        
-        var link = await _repositoryLink.GetLinkByIdAsync(id);
 
-        if (link == null) 
-            return null;
-        
         var statusCode = await GetStatusCodeAsync(link.Url);
 
         linkString = statusCode.ToString();
@@ -39,10 +33,10 @@ public class RedisService : IRedisService
         return linkString;
     }
     
-    private async Task<HttpStatusCode> GetStatusCodeAsync(string link)
+    private async Task<HttpStatusCode> GetStatusCodeAsync(string url)
     {
         using var client = new HttpClient();
-        using var response = await client.GetAsync(link);
+        using var response = await client.GetAsync(url);
 
         return response.StatusCode;
     }

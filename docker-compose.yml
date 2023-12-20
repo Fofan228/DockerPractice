@@ -3,25 +3,68 @@ networks:
   practice:
     driver: bridge
 services:
-  app:
-    container_name: links
+  app1:
+    container_name: links1
     build:
       context: .
       dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
     ports:
-      - "5000:5000"
+      - "5000:80"
     networks:
       - practice
     depends_on:
       - postgres_db
       - rabbitmq
-  consumer:
-    container_name: consumer
+      - redis
+  app2:
+    container_name: links2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+    ports:
+      - "5001:80"
+    networks:
+      - practice
+    depends_on:
+      - postgres_db
+      - rabbitmq
+      - redis
+  consumer1:
+    container_name: consumer1
     build:
       context: .
       dockerfile: DockerFileConsumer
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
     ports:
-      - "5110:5110"
+      - "5110:80"
+    networks:
+      - practice
+    depends_on:
+      - postgres_db
+      - redis
+      - rabbitmq
+  consumer2:
+    container_name: consumer2
+    build:
+      context: .
+      dockerfile: DockerFileConsumer
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+    ports:
+      - "5111:80"
     networks:
       - practice
     depends_on:
@@ -57,6 +100,21 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    networks:
+      - practice
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    build:
+      context: lab-nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - /etc/letsencrypt/:/etc/letsencrypt/
+    ports:
+      - "80:80"
+    depends_on:
+      - links1
+      - links2
     networks:
       - practice
   redis:
